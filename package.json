@@ -1,0 +1,17 @@
+{
+  "name": "jusbrasil",
+  "version": "1.0.0",
+  "description": "Store project",
+  "main": " ",
+  "repository": " ",
+  "author": "Alan",
+  "license": " ",
+  "private": true,
+  "workspaces": [
+    "front",
+    "back"
+  ],
+  "dependencies": {
+    "concurrently": "^5.3.0"
+  }
+}
