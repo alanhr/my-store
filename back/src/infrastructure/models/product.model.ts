@@ -1,9 +1,10 @@
 import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, ManyToOne, OneToMany } from 'typeorm'
-import { CategoryModel } from './category.model'
-import { ShoppingCartProductModel } from './shopping-cart-product.model'
+import { BaseModel } from './base.model'
+import { Category } from './category.model'
+import { ShoppingCartProduct } from './shopping-cart-product.model'
 
 @Entity()
-export class ProductModel {
+export class Product extends BaseModel {
   @PrimaryGeneratedColumn()
   id: number
 
@@ -16,10 +17,10 @@ export class ProductModel {
   @Column()
   image: string
 
-  @ManyToOne(() => CategoryModel)
+  @ManyToOne(() => Category)
   @JoinColumn({ name: 'categoryId' })
-  category: CategoryModel
+  category: Category
 
-  @OneToMany(() => ShoppingCartProductModel, (shoppingCartProduct) => shoppingCartProduct.shoppingCart)
-  shoppingCartProducts: ShoppingCartProductModel[]
+  @OneToMany(() => ShoppingCartProduct, (shoppingCartProduct) => shoppingCartProduct.shoppingCart)
+  shoppingCartProducts: ShoppingCartProduct[]
 }

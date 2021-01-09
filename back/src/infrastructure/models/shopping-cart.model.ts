@@ -1,8 +1,9 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany, Generated } from 'typeorm'
-import { ShoppingCartProductModel } from './shopping-cart-product.model'
+import { BaseModel } from './base.model'
+import { ShoppingCartProduct } from './shopping-cart-product.model'
 
 @Entity()
-export class ShoppingCartModel {
+export class ShoppingCart extends BaseModel {
   @PrimaryGeneratedColumn()
   id: number
 
@@ -10,6 +11,6 @@ export class ShoppingCartModel {
   @Generated('uuid')
   uuid: string
 
-  @OneToMany(() => ShoppingCartProductModel, (shoppingCartProduct) => shoppingCartProduct.shoppingCart)
-  shoppingCartProducts: ShoppingCartProductModel[]
+  @OneToMany(() => ShoppingCartProduct, (shoppingCartProduct) => shoppingCartProduct.shoppingCart)
+  shoppingCartProducts: ShoppingCartProduct[]
 }

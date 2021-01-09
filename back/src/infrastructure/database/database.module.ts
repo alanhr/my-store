@@ -15,10 +15,12 @@ import { resolve } from 'path'
         password: configService.get('database.password'),
         database: configService.get('database.name'),
         synchronize: true,
-        entities: [resolve(__dirname, '../models/*.entity{.ts,.js}')],
+        entities: [resolve(__dirname, '../models/*.model{.ts,.js}')],
       }),
       inject: [ConfigService],
     }),
   ],
+
+  exports: [TypeOrmModule],
 })
 export class DatabaseModule {}

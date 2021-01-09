@@ -1,14 +1,15 @@
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm'
-import { ProductModel } from './product.model'
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany, } from 'typeorm'
+import { BaseModel } from './base.model'
+import { Product } from './product.model'
 
 @Entity()
-export class CategoryModel {
+export class Category extends BaseModel {
   @PrimaryGeneratedColumn()
   id: number
 
   @Column()
   name: string
 
-  @OneToMany(() => ProductModel, (product) => product.category)
-  products: ProductModel[]
+  @OneToMany(() => Product, (product) => product.category)
+  products: Product[]
 }

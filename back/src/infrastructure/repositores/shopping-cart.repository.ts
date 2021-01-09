@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { EntityRepository, Repository } from 'typeorm'
-import { ShoppingCartModel } from '../models/shopping-cart.model'
+import { ShoppingCart } from '../models/shopping-cart.model'
 
-@EntityRepository()
+@EntityRepository(ShoppingCart)
 @Injectable()
-export class ShoppingCartRepository extends Repository<ShoppingCartModel> {}
+export class ShoppingCartRepository extends Repository<ShoppingCart> {}
