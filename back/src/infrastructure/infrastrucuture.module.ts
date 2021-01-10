@@ -10,7 +10,6 @@ import { ShoppingCartProductRepository } from './repositores/shopping-cart-produ
     DatabaseModule, 
     TypeOrmModule.forFeature([ShoppingCartRepository, ProductRepository,ShoppingCartProductRepository])
   ],
-  providers: [ShoppingCartRepository, ProductRepository],
   exports: [TypeOrmModule],
 })
 export class InfrastructureModule {}

@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common'
-import { TypeOrmModule } from '@nestjs/typeorm'
+import { TypeOrmModule, TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm'
 import { ConfigService, ConfigModule } from '@nestjs/config'
 import { resolve } from 'path'
 
@@ -19,8 +19,6 @@ import { resolve } from 'path'
       }),
       inject: [ConfigService],
     }),
-  ],
-
-  exports: [TypeOrmModule],
+  ]
 })
 export class DatabaseModule {}
