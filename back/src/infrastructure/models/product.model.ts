@@ -17,6 +17,9 @@ export class Product extends BaseModel {
   @Column()
   image: string
 
+  @Column()
+  quantity: number
+
   @ManyToOne(() => Category)
   @JoinColumn({ name: 'categoryId' })
   category: Category
