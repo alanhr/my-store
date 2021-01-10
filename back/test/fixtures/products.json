@@ -1,0 +1,29 @@
+[
+  {
+    "name": "Blusa rosa",
+    "price": 100,
+    "image": "blusa-rosa.jpg",
+    "quantity": 10,
+    "category": {
+      "id":1
+    }
+  },
+  {
+    "name": "Blusa Azul",
+    "price": 80,
+    "image": "blusa-azul.jpg",
+    "quantity": 2,
+    "category": {
+      "id": 1
+    }
+  },
+  {
+    "name": "Blusa Preta",
+    "price": 100,
+    "image": "blusa-preta.jpg",
+    "quantity": 3,
+    "category": {
+      "id": 1
+    }
+  }
+]

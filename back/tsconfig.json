@@ -2,6 +2,7 @@
   "compilerOptions": {
     "module": "commonjs",
     "declaration": true,
+    "resolveJsonModule": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
@@ -10,6 +11,29 @@
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./",
-    "incremental": true
+    "incremental": true,
+    "paths": {
+      "@config/*": [
+        "src/config/*"
+      ],
+      "@infrastructure/*": [
+        "src/infrastructure/*"
+      ],
+      "@infrastructure": [
+        "src/infrastructure"
+      ],
+      "@domain/*": [
+        "src/domain/*"
+      ],
+      "@domain": [
+        "src/domain"
+      ],
+      "@application/*": [
+        "src/application/*"
+      ],
+      "@application": [
+        "src/application"
+      ],
+    },
   }
 }
