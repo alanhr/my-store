@@ -6,8 +6,10 @@ import { ShoppingCart } from './shopping-cart.model'
 export class ShoppingCartProduct {
   @Column()
   quantity: number
-  @ManyToOne(() => Product, (product) => product.shoppingCartProducts, { primary: true })
+
+  @ManyToOne(() => Product, (product) => product.shoppingCartProducts, { primary: true})
   product: Product
+
   @ManyToOne(() => ShoppingCart, (shoppingCart) => shoppingCart.shoppingCartProducts, { primary: true })
   shoppingCart: ShoppingCart
 }

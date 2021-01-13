@@ -8,15 +8,17 @@ import * as categoryFixture from './fixtures/category.json'
 import * as productsFixture from './fixtures/products.json'
 import { CategoryRepository } from '@infrastructure/repositores/category.repository'
 import { Product } from '@application/entities/product.entity'
+import { ShoppingCart } from '@application/entities/shopping-cart.entity'
 import { format } from 'currency-formatter'
+import { ShoppingCartProductRepository } from '@infrastructure/repositores/shopping-cart-product.repository'
 
 
 describe('AppController (e2e)', () => {
   let app: INestApplication
   let container: StartedTestContainer;
-  let server: request.SuperTest<request.Test>
   let productRepository: ProductRepository
   let categoryRepository: CategoryRepository
+  let shoppingCartProductRepository: ShoppingCartProductRepository
 
   beforeAll(async () => {
     container = await new GenericContainer("mysql", '5.7')
@@ -45,6 +47,7 @@ describe('AppController (e2e)', () => {
     
     productRepository = moduleFixture.get(ProductRepository)
     categoryRepository = moduleFixture.get(CategoryRepository)
+    shoppingCartProductRepository = moduleFixture.get(ShoppingCartProductRepository)
 
     const totalCategory = await categoryRepository.count({where:categoryFixture})
 
@@ -54,18 +57,17 @@ describe('AppController (e2e)', () => {
 
     await app.init()
 
-    server = request(app.getHttpServer())
-
   }, 100000)
 
   afterEach(async() => {
     await productRepository.delete({})
   })
 
-  it('getProducts', async () => {
-    await productRepository.save(productsFixture)
+  describe(`Product`,() => {
+    it('getProducts', async () => {
+      await productRepository.save(productsFixture)
 
-    const query = `
+      const query = `
       query getProducts {
         products {
           id
@@ -74,15 +76,82 @@ describe('AppController (e2e)', () => {
         }
       }
     `
-    const response = await server.post('/graphql')
-      .send({
-        query: query
+      const response = await request(app.getHttpServer()).post('/graphql')
+        .send({
+          query: query
+        })
+
+      const expectedPrice = format(productsFixture[0].price, { locale: 'pt-BR' })
+
+      const products: Product[] = response.body.data.products
+      expect(products).toHaveLength(3);
+      expect(products[0]).toHaveProperty('price', expectedPrice);
+    })
+  })
+
+  describe('ShoppingCart',() => {
+    afterEach(async () => {
+      await shoppingCartProductRepository.delete({})
+    })
+    
+    it('addProductInCart', async() => {
+      await productRepository.save(productsFixture)
+
+      const productId = 1
+
+      const query = `
+        mutation addProductInCart($productId: ID!, $cartId: ID) {
+          addProductInCart(cartId: $cartId, productId: $productId) {
+            id
+            items {
+              quantity
+              product {
+                name
+                price
+              }
+            }
+          }
+        }
+      `
+
+      const expectedResult = expect.objectContaining({
+        id: expect.any(String),
+        items: expect.arrayContaining([
+          expect.objectContaining({
+            quantity:expect.any(Number),
+            product: {
+              name: expect.any(String),
+              price: expect.any(String),
+            }
+          })
+        ])
       })
 
-    const expectedPrice = format(productsFixture[0].price, { locale:'pt-BR' })
+      const response = await request(app.getHttpServer()).post('/graphql')
+        .send({
+          query: query,
+          variables: {
+            productId
+          }
+        })
 
-    const products: Product[]  = response.body.data.products
-    expect(products).toHaveLength(3);
-    expect(products[0]).toHaveProperty('price', expectedPrice);
+      const cart: ShoppingCart = response.body.data.addProductInCart
+      expect(cart).toEqual(expectedResult)
+
+      const cartId = cart.id
+
+      const response2 = await request(app.getHttpServer()).post('/graphql')
+        .send({
+          query: query,
+          variables: {
+            productId,
+            cartId
+          }
+        })
+
+
+      expect(response2.body.data.addProductInCart.items).toHaveLength(1)
+      expect(response2.body.data.addProductInCart.items[0].quantity).toBeGreaterThan(1)
+    })
   })
 })

@@ -1,14 +1,13 @@
 import { InfrastructureModule } from '@infrastructure/infrastrucuture.module';
-import { ProductRepository } from '@infrastructure/repositores/product.repository';
 import { Module } from '@nestjs/common'
-import { TypeOrmModule } from '@nestjs/typeorm'
 import { ProductsService } from './services/product.service';
+import { ShoppingCartService } from './services/shopping-cart.service';
 
 @Module({
   imports: [
     InfrastructureModule,
   ],
-  providers:[ProductsService],
-  exports:[ProductsService]
+  providers:[ProductsService, ShoppingCartService],
+  exports: [ProductsService, ShoppingCartService]
 })
 export class DomainModule {}

@@ -9,7 +9,7 @@ export class ShoppingCart extends BaseModel {
 
   @Column()
   @Generated('uuid')
-  uuid: string
+  externalId: string
 
   @OneToMany(() => ShoppingCartProduct, (shoppingCartProduct) => shoppingCartProduct.shoppingCart)
   shoppingCartProducts: ShoppingCartProduct[]

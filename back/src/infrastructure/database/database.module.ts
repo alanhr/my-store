@@ -16,6 +16,7 @@ import { resolve } from 'path'
         database: configService.get('database.name'),
         synchronize: true,
         entities: [resolve(__dirname, '../models/*.model{.ts,.js}')],
+        keepConnectionAlive: true
       }),
       inject: [ConfigService],
     }),

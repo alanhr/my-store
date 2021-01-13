@@ -8,6 +8,20 @@ type Product {
   price(locale: String = "pt-BR"): String!
 }
 
+type ShoppingCartProduct {
+  quantity: Int!
+  product: Product!
+}
+
+type ShoppingCart {
+  id: ID!
+  items: [ShoppingCartProduct!]!
+}
+
 type Query {
   products: [Product!]!
+}
+
+type Mutation {
+  addProductInCart(cartId: ID, productId: ID!): ShoppingCart!
 }

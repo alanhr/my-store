@@ -24,6 +24,8 @@ export class Product extends BaseModel {
   @JoinColumn({ name: 'categoryId' })
   category: Category
 
-  @OneToMany(() => ShoppingCartProduct, (shoppingCartProduct) => shoppingCartProduct.shoppingCart)
+  @OneToMany(() => ShoppingCartProduct, (shoppingCartProduct) => shoppingCartProduct.shoppingCart, {
+    cascade: true
+  })
   shoppingCartProducts: ShoppingCartProduct[]
 }

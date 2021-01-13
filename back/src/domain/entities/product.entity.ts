@@ -1,4 +1,4 @@
-import { IsDecimal, IsNotEmpty, IsString, ValidateNested } from 'class-validator';
+import { IsDecimal, IsInt, IsNotEmpty, IsString, ValidateNested } from 'class-validator';
 import { Category } from './category.entity';
 
 export class Product {
@@ -16,6 +16,10 @@ export class Product {
   @IsString()
   @IsNotEmpty()
   image: string;
+
+  @IsInt()
+  @IsNotEmpty()
+  quantity: number;
 
   @ValidateNested()
   category: Category
