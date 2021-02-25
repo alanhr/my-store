@@ -18,7 +18,16 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "NODE_ENV=test jest --config ./test/jest-e2e.json"
+    "test:e2e": "NODE_ENV=test jest --config ./test/jest-e2e.json",
+    "migrate:create": "ts-node ../node_modules/typeorm/cli.js migration:create",
+    "migrate:generate": "ts-node ../node_modules/typeorm/cli.js migration:generate",
+    "migrate:run": "ts-node ../node_modules/typeorm/cli.js migration:run",
+    "schema:drop": "ts-node ../node_modules/typeorm/cli.js schema:drop",
+    "schema:sync": "ts-node ../node_modules/typeorm/cli.js schema:sync",
+    "schema:log": "ts-node ../node_modules/typeorm/cli.js schema:log",
+    "seed:run": "ts-node ../node_modules/typeorm-seeding/dist/cli.js seed",
+    "seed:config": "ts-node ../node_modules/typeorm-seeding/dist/cli.js config",
+    "db:setup": "yarn run schema:drop && yarn schema:sync && yarn run seed:run"
   },
   "dependencies": {
     "@nestjs/common": "^7.5.1",
@@ -27,6 +36,7 @@
     "@nestjs/graphql": "^7.9.4",
     "@nestjs/platform-express": "^7.5.1",
     "@nestjs/typeorm": "^7.1.5",
+    "@types/faker": "^5.1.5",
     "apollo-server-express": "^2.19.1",
     "class-validator": "^0.12.2",
     "currency-formatter": "^1.5.6",
@@ -36,7 +46,8 @@
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.3",
-    "typeorm": "^0.2.29"
+    "typeorm": "^0.2.29",
+    "typeorm-seeding": "^1.6.1"
   },
   "devDependencies": {
     "@nestjs/cli": "^7.5.1",

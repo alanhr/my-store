@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common'
-import { TypeOrmModule, TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm'
+import { TypeOrmModule } from '@nestjs/typeorm'
 import { ConfigService, ConfigModule } from '@nestjs/config'
 import { resolve } from 'path'
 
@@ -14,12 +14,11 @@ import { resolve } from 'path'
         username: configService.get('database.username'),
         password: configService.get('database.password'),
         database: configService.get('database.name'),
-        synchronize: true,
         entities: [resolve(__dirname, '../models/*.model{.ts,.js}')],
-        keepConnectionAlive: true
+        keepConnectionAlive: true,
       }),
       inject: [ConfigService],
     }),
-  ]
+  ],
 })
 export class DatabaseModule {}

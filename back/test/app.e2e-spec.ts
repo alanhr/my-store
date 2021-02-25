@@ -21,6 +21,7 @@ describe('AppController (e2e)', () => {
   let shoppingCartProductRepository: ShoppingCartProductRepository
 
   beforeAll(async () => {
+    console.log('Start to up mysql container')
     container = await new GenericContainer("mysql", '5.7')
       .withName('store-db-test')
       .withEnv('MYSQL_DATABASE', 'store-test-db')
@@ -31,6 +32,7 @@ describe('AppController (e2e)', () => {
       .start()
 
     process.env.DATABASE_PORT = container.getMappedPort(3306).toString()
+    console.log('container up !')
   }, 100000)
 
   afterAll(async () => {
